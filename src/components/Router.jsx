@@ -6,6 +6,7 @@ import Home from '../pages/Home'
 import Login from '../pages/Login'
 import EmitirFactura from '../pages/EmitirFactura'
 import VerificarFactura from '../pages/VerificarFactura'
+import Configuracion from '../pages/Configuracion'
 
 const Router = () => {
 
@@ -18,6 +19,7 @@ const Router = () => {
             case "EmitirFactura": return <EmitirFactura />
             case "VerificarFactura": return <VerificarFactura/>
             case "ConsultarRegistros": return <ConsultarRegistros />
+            case "Configuracion": return <Configuracion />
             default: return <ErrorPage />
         }
     }catch(err){

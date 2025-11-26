@@ -390,7 +390,37 @@ body{
 		}
 	}
 }
+.Configuracion{
+	@include pageBasis;
 
+	scrollbar-width: none;
+	@include pageBasis;
+
+	.listContainer{
+		// background-color: var(--moduleColor);
+		padding: var(--modulepPadding);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 10px;
+		margin: 10px;
+		border-radius: var(--moduleRadius);
+		width: 95%;
+		overflow-y: scroll;
+
+		.row{
+			width: 50%;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			gap: 3px;
+
+			.rowItem{
+				width: 60%;
+			}
+		}
+	}
+}
 .ConsultarRegistros{
 	@include pageBasis;
 		.listContainer{
