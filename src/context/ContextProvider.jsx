@@ -16,7 +16,7 @@ const ContextProvider = ({children}) => {
 			logged,
 			setLogged,
 			messageApi,
-			contextHolder,
+			contextHolder
 		}} >
 			{children}
 		</appContext.Provider>

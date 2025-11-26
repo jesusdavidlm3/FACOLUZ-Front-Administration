@@ -22,12 +22,15 @@ const LatPanel = () => {
 
             <div className='buttons'>
                 <Button className='Button' size={'large'} onClick={()=>{setView('Home')}} variant='solid' icon={<HomeOutlined />}> <p className='invisible'>Inicio</p></Button> 
-                <Button className='Button' size={'large'} onClick={()=>{setConfirmLogout(true)}} variant='solid' icon={<LogoutOutlined />} color='danger'><p className='invisible' color='danger'>Cerrar Sesion</p></Button> 
+                <Button className='Button' size={'large'} onClick={()=>{setView('EmitirFactura')}} variant='solid' icon={<UserOutlined />}> <p className='invisible'>Emitir factura</p></Button> 
+                <Button className='Button' size={'large'} onClick={()=>{setView('VerificarFactura')}} variant='solid' icon={<UsergroupDeleteOutlined />}><p className='invisible'>Verificar factura</p></Button> 
+                <Button className='Button' size={'large'} onClick={()=>{setView('ConsultarRegistros')}} variant='solid' icon={<SolutionOutlined />}><p className='invisible'>Consultar registros</p></Button> 
+                <Button className='Button' size={'large'} onClick={()=>{setConfirmLogout(true)}} variant='solid' icon={<LogoutOutlined />}><p className='invisible'>Cerrar sesion</p></Button> 
             </div>
 
             <img src={Logo_Facoluz} draggable={false} className='facoLogo'/>
 
-            <LogoutModal open={confirmLogout} ocCancel={()=>setConfirmLogout(false)} /> 
+            <LogoutModal open={confirmLogout} onCancel={()=>setConfirmLogout(false)} /> 
         </div>
     )
 }

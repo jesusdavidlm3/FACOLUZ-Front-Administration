@@ -1,10 +1,11 @@
-import { Form, Input, Button } from 'antd'
-import { useContext, useState } from 'react'
+import { Form, Input, Button, InputNumber } from 'antd'
+import { useContext, useEffect, useState } from 'react'
 import { appContext } from '../context/appContext' 
 import { encrypt } from '../functions/hash'
 import { login } from '../client/client'
-import { routerContext } from '../context/routerContext'
+import { LoadingOutlined } from '@ant-design/icons'
 import React from 'react'
+import { routerContext } from '../context/routerContext'
 import logofaco from '../assets/Logo_FacoLuz.png'
 import logoluz from '../assets/Logo_LUZ.png'
 
@@ -12,7 +13,11 @@ const Login = () => {
 
 	const [loading, setLoading] = useState(false)
 	const {setView} = useContext(routerContext)
-	const { messageApi, setUserData, setLogged } = useContext(appContext)
+	const { messageApi, setUserData, setLogged, contextHolder } = useContext(appContext)
+
+	useEffect(() => {
+		setLogged(false)
+	}, [])
 
 	const submitLogin = async () => {
 		setLoading(true)
@@ -20,15 +25,14 @@ const Login = () => {
 		const password = document.getElementById('password').value
 
 		const data = {
-			identification: identification,
+			id: identification,
 			passwordHash: await encrypt(password)
 		}
 		let res = await login(data)
-		console.log(res)
 		if(res.status == 200){
+			setView("Home")
 			setUserData(res.data)
 			setLogged(true)
-			setView('Home')
 		}else{
 			messageApi.open({
 				type: 'error',
@@ -36,26 +40,26 @@ const Login = () => {
 			})
 			setLoading(false)
 		}
-
 	}
 
 	return(
 		<div className='Login'>
+			{contextHolder}
 			<Form disabled={loading} className='loginForm' onFinish={submitLogin}>
 				<div className='logos'>
 					<img src={logoluz} className='logoluz'/>
 					<img src={logofaco} className='logofaco'/>
 				</div>
-				<h1>Modulo de historias clinicas</h1>
-				<h2>iniciar sesion</h2>
+				<h1>Modulo administrativo</h1>
+				<h2>Iniciar sesion</h2>
 				<Form.Item name='identification'>
-					<Input placeholder='Identificacion'/>
+					<Input placeholder='Identificacion' disabled={loading} />
 				</Form.Item>
 				<Form.Item name='password'>
-					<Input.Password placeholder='Contraseña'/>
+					<Input.Password placeholder='Contraseña'disabled={loading} />
 				</Form.Item>
 
-				<Button htmlType='submit' onClick={submitLogin}>Iniciar Sesion</Button>
+				<Button htmlType='submit' disabled={loading} color='default' > {loading ? (<>{<LoadingOutlined />}Cargando...</>):(<h4>Iniciar sesion</h4>)} </Button>
 			</Form>
 		</div>
 	)

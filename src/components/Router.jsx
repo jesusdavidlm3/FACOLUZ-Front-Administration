@@ -1,24 +1,27 @@
 import React, {useContext} from "react";
-import { routerContext } from "../context/routerContext";
-import ErrorPage from "../pages/ErrorPage";
-import Login from "../pages/Login";
-import Home from "../pages/Home";
-import DateList from "../pages/DateList";
-import History from "../pages/History"
-import CurrentDate from '../pages/CurrentDate'
+import { routerContext } from "../context/routerContext"
+import ErrorPage from '../pages/ErrorPage'
+import ConsultarRegistros from '../pages/ConsultarRegistros'
+import Home from '../pages/Home'
+import Login from '../pages/Login'
+import EmitirFactura from '../pages/EmitirFactura'
+import VerificarFactura from '../pages/VerificarFactura'
 
 const Router = () => {
 
     const {view} = useContext(routerContext)
 
-    try {
+    try{
         switch(view){
-            case "Home": return <Home/>
-            case "Login": return <Login/>
-            default: return <ErrorPage/>
+            case "Login": return <Login />
+            case "Home": return <Home />
+            case "EmitirFactura": return <EmitirFactura />
+            case "VerificarFactura": return <VerificarFactura/>
+            case "ConsultarRegistros": return <ConsultarRegistros />
+            default: return <ErrorPage />
         }
-    } catch (err) {
-        return <ErrorPage/>
+    }catch(err){
+        return <ErrorPage />
     }
 }
 

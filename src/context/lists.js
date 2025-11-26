@@ -3,8 +3,8 @@ export function searchOnList(list, id){
 }
 
 export const instructionGradeList = [
-    {label: 'Ninguno', value: 1},
-    {label: 'Prescolar', value: 2},
+    {label: 'Ninguno', value: 0},
+    {label: 'Prescolar', value: 1},
     {label: 'Primaria', value: 3},
     {label: 'Bachillerato', value: 4},
     {label: 'Universitario', value: 5},
@@ -12,25 +12,30 @@ export const instructionGradeList = [
 ]
 
 export const bloodTypeList = [
-    {label: 'A+', value: 1},
-    {label: 'A-', value: 2},
-    {label: 'B+', value: 3},
-    {label: 'B-', value: 4},
-    {label: 'AB+', value: 5},
-    {label: 'AB-', value: 6},
-    {label: 'O+', value: 7},
-    {label: 'O-', value: 8},
+    {label: 'A+', value: 0},
+    {label: 'O+', value: 1},
+    {label: 'B+', value: 2},
+    {label: 'AB+', value: 3},
+    {label: 'A-', value: 4},
+    {label: 'O-', value: 5},
+    {label: 'B-', value: 6},
+    {label: 'AB-', value: 7},
+]
+
+export const patientTypeList = [
+    {label: 'Niño', value: 0},
+    {label: 'Adulto', value: 1}
 ]
 
 export const sexList = [
-    {label: 'Masculino', value: 1},
-    {label: 'Femenino', value: 2}
+    {label: 'Masculino', value: 0},
+    {label: 'Femenino', value: 1}
 ]
 
 export const identificationList = [
     {label: 'V', value: 1},
     {label: 'E', value: 2},
-    {label: 'Cod.', value: 3},
+    {label: 'Cod.', value: 0},
 ]
 
 export const trueFalseList = [
@@ -39,13 +44,13 @@ export const trueFalseList = [
 ]
 
 export const raceList = [
-    {label: 'Blanco', value: 1},
-    {label: 'Negro', value: 2},
-    {label: 'Moreno', value: 3},
-    {label: 'Indigena', value: 4},
+    {label: 'Blanco', value: 0},
+    {label: 'Negro', value: 1},
+    {label: 'Moreno', value: 2},
+    {label: 'Indigena', value: 3},
 ]
 
-export const ailmentsList = [
+export const alimentsList = [
     {label: 'Adenopatias', value: 0},
     {label: 'Afeccion cardiovascular', value: 1},
     {label: 'Afecciones hematologicas', value: 2},
@@ -78,101 +83,34 @@ export const userTypeList = [
     {label: 'Docente', value: 1},
     {label: 'Estudiante', value: 2},
     {label: 'Administrador de estudios', value: 3},
+    {label: 'Recepcionista', value: 4},
 ]
 
-export const dateStatus = [
-    {label: 'Pendiente', value: 1},
-    {label: 'Atendida', value: 2},
-    {label: 'Cancelada', value: 3},
+export const changeLogsActionType = [
+    {label: 'creo un usuario a', value: 0},
+    {label: 'desactivo el usuario de', value: 1},
+    {label: 'reactivo el usuario de', value: 2},
+    {label: 'cambio la contrasena de', value: 3},
+    {label: 'cambio el tipo de usuario de', value: 4}
 ]
 
-export const relationshipType = [
-    {label: 'Madre', value: 1},
-    {label: 'Padre', value: 2},
-    {label: 'Abuelo/a', value: 4},
-    {label: 'Hermano/a', value: 5},
-    {label: 'Nieto/a', value: 6},
-    {label: 'Hijo/a', value: 7},
-    {label: 'Esposo/a', value: 8},
-    {label: 'Tio/a', value: 9},
-    {label: 'Sobrino/a', value: 10},
-    {label: 'Otros', value: 11},
+export const BillableItems = [
+    {label: 'Cirugia', value: 1},
+    {label: 'Endodoncia', value: 2},
+    {label: 'Ortodoncia', value: 3},
+    {label: 'Peridoncia', value: 4},
+    {label: 'Protesis total', value: 5},
+    {label: 'Protesis parcial removible', value: 6},
+    {label: 'Protesis parcial fija', value: 7},
+    {label: 'CIA', value: 8},
+    {label: 'CIAN', value: 9},
+    {label: 'Emergencia de CIA', value: 10},
+    {label: 'Emergencia de CIAN', value: 11}
 ]
 
-export const listOfThree = [
-    {label: 'Si', value: 1},
-    {label: 'No', value: 2},
-    {label: 'No Sabe', value: 3}
-]
-
-export const homeOwnership = [
-    {label: 'Familiar', value: 1},
-    {label: 'Propia', value: 2},
-    {label: 'Alquilada', value: 3},
-]
-
-export const ethnicityList = [
-    {label: "Wayuu", value: 1},
-    {label: "Añu", value: 2},
-    {label: "Bari", value: 3},
-    {label: "Yukpa", value: 4},
-    {label: "Japreria", value: 5},
-    {label: "Otros", value: 6},
-]
-
-export const menstruationCicle = [
-    {label: "Ausente", value: 1},
-    {label: "Normal", value: 2},
-    {label: "Abundante", value: 3},
-    {label: "Poco", value: 4},
-]
-
-export const gumEvaluationArea = [
-    {label: "Marginal y papilar", value: 1},
-    {label: "Difuso", value: 2}
-]
-
-export const gumEvaluationLocation = [
-    {label: "Generalizado", value: 1},
-    {label: "Localizado", value: 2},
-]
-
-export const gumColor = [
-    {label: "Rosado coral", value: 1},
-    {label: "Rojo intenso", value: 2},
-    {label: "Rojo Violaceo", value: 3},
-    {label: "Pigmentado", value: 4},
-]
-
-export const gumEnlargement = [
-    {label: "Ausente", value: 1},
-    {label: "Leve", value: 2},
-    {label: "moderado", value: 3},
-    {label: "Severo", value: 4},
-]
-
-export const gumTexture = [
-    {label: "Puntilado", value: 1},
-    {label: "Leve perdida de puntillado", value: 2},
-    {label: "Moderada perdida de puntillado", value: 3},
-    {label: "Exagerada perdida de puntillado", value: 4},
-]
-
-export const gumConsistency = [
-    {label: "Firme", value: 1},
-    {label: "Blanda y depresible", value: 2},
-    {label: "Fibrosa", value: 3},
-]
-
-export const gumPosition = [
-    {label: "Migracion apical", value: 1},
-    {label: "Migracion coronal", value: 2},
-]
-
-export const gumForm = [
-    {label: "Festoneada", value: 1},
-    {label: "Irregular", value: 2},
-    {label: "Perdida leve del festoneado", value: 3},
-    {label: "Perdida moderada del festoneado", value: 4},
-    {label: "Perdida exagerada del festoneado", value: 5},
+export const paymentMethods = [
+    {label: 'Bolivares en efectivo', value: 1},
+    {label: 'Bolivares en transferencia', value: 2},
+    {label: 'Dolares en efectivo', value: 3},
+    {label: 'Dolares en transferencia', value: 4},
 ]

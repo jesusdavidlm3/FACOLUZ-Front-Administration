@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
 
@@ -14,8 +14,12 @@ const createWindow = () => {
     height: 600,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
+      contextIsolation: true
     },
   });
+
+  mainWindow.setMenuBarVisibility(false)
+  mainWindow.maximize()
 
   // and load the index.html of the app.
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
@@ -25,8 +29,12 @@ const createWindow = () => {
   }
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 };
+
+ipcMain.handle('get_Backend_Address', () => {
+  return process.env.VITE_BACK_ADDRESS
+})
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.

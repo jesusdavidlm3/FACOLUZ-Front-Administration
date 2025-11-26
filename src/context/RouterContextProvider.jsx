@@ -1,13 +1,13 @@
-import React, { useState} from "react";
-import { routerContext } from "./routerContext";
+import React, { useState } from "react"
+import { routerContext } from "./routerContext"
 
 const RouterContextProvider = ({children}) => {
 
-    const [view, setView] = useState ('Login')
+    const [view, setView] = useState('Login')
 
     return(
         <routerContext.Provider
-            value = {{
+            value={{
                 view,
                 setView
             }}
