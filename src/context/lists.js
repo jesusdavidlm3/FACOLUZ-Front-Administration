@@ -112,5 +112,5 @@ export const paymentMethods = [
     {label: 'Bolivares en efectivo', value: 1},
     {label: 'Bolivares en transferencia', value: 2},
     {label: 'Dolares en efectivo', value: 3},
-    {label: 'Dolares en transferencia', value: 4},
+    {label: 'Exoneración', value: 4},
 ]

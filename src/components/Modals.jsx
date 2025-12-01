@@ -32,6 +32,23 @@ export const LogoutModal = ({open, onCancel}) => {
 	)
 }
 
+export const GenerateReportModal = ({open, onCancel}) => {
+	
+
+	return(
+		<Modal
+			title='Generar reporte?'
+			open={open}
+			closable={false}
+			footer={[
+				<Button variant='solid' color='danger' >Reporte del dia </Button>,
+				<Button onClick={onCancel} variant='text' >Cancelar</Button>
+			]}
+		>
+		</Modal>
+	)
+}
+
 export const AddNewUserModal = ({open, onCancel, updateList}) => {
 
 	//Control de la UI

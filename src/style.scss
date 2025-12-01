@@ -423,7 +423,13 @@ body{
 }
 .ConsultarRegistros{
 	@include pageBasis;
-		.listContainer{
+	.generateReport{
+		display: block;
+		align-items: right;
+		margin: 10px;
+		width: 100px
+	}	
+	.listContainer{
 		// background-color: var(--moduleColor);
 		padding: var(--modulepPadding);
 		display: flex;
@@ -442,6 +448,8 @@ body{
 			flex-direction: column;
 			height: 100%;
 		}
+
+		
 
 		.mainList{
 			background-color: white;

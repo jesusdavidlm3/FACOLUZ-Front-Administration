@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { searchOnList } from '../context/lists'
 import * as lists from '../context/lists'
 import React from 'react'
-import { Divider, List } from 'antd'
+import { Button, Divider, List } from 'antd'
 import { getTime, getDate } from '../functions/formatDates'
 import Pagination from "../components/Pagination"
 
@@ -15,6 +15,7 @@ const ConsultarRegistros = () => {
     return(
         <div className="ConsultarRegistros Page">
             <Divider className='PageTitle'><h1>Historial de facturacion</h1></Divider>
+            <Button className='generateReport' type='primary' >Generar Reporte</Button>
             <div className='listContainer Content'>
                 <List bordered className='mainList' size='small'>
                     {showList.map(item => (

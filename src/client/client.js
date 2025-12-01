@@ -11,13 +11,21 @@ export async function login(data){
 	return res
 }
 
+export async function getIdInvoice(){
+	return await http.get('api/getIdInvoice', token, null)
+}
+
+export async function getSearchedPayer(identification){
+	return await http.get(`api/getSearchedPayer/${identification}`, token, null)
+}
+
 export async function getAllUsers(page) {
 	return await http.get(`api/getAllUsers/${page}`, token, null)
 }
 
-export async function getSearchedUsers(text, page){
-	return await http.get(`api/getSearchedUsers/${text}/${page}`, token, null)
-}
+// export async function getSearchedUsers(text, page){
+// 	return await http.get(`api/getSearchedUsers/${text}/${page}`, token, null)
+// }
 
 export async function getSearchedSDeactivatedUsers(text, page){
 	return await http.get(`api/getSearchedSDeactivatedUsers/${text}/${page}`, token, null)
@@ -26,6 +34,7 @@ export async function getSearchedSDeactivatedUsers(text, page){
 export async function getDeactivatedUsers(page) {
 	return await http.get(`api/getDeactivatedUsers/${page}`, token, null)
 }
+
 export async function getIdUsers(id) {
 	return await http.get('api/getIdUsers', token, id)
 }
