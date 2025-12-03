@@ -15,18 +15,25 @@ export async function getIdInvoice(){
 	return await http.get('api/getIdInvoice', token, null)
 }
 
+export async function issueInvoice(data){
+	return await http.post('api/issueInvoice', token, data)
+}
+
 export async function getSearchedPatient(identification){
 	return await http.get(`api/getSearchedPatient/${identification}`, token, null)
 }
 
-export async function getAllUsers(page) {
-	return await http.get(`api/getAllUsers/${page}`, token, null)
-}
+
+
+
 
 // export async function getSearchedUsers(text, page){
 // 	return await http.get(`api/getSearchedUsers/${text}/${page}`, token, null)
 // }
-
+	
+export async function getAllUsers(page) {
+	return await http.get(`api/getAllUsers/${page}`, token, null)
+}
 export async function getSearchedSDeactivatedUsers(text, page){
 	return await http.get(`api/getSearchedSDeactivatedUsers/${text}/${page}`, token, null)
 }

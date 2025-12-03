@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Input, Button, Divider, Select } from 'antd'
-import { getSearchedPatient, getIdInvoice } from '../client/client'
+import { issueInvoice, getSearchedPatient, getIdInvoice } from '../client/client'
 import { appContext } from '../context/appContext'
 import * as lists from '../context/lists'
 
@@ -10,8 +10,10 @@ const EmitirFactura = () => {
 
 	const [selectedBillable, setSelectedBillable] = useState({value: 0, label: "Servicio a cancelar:", price: 0})
 	const [paymentMethod, setPaymentMethod] = useState({value: 0, label: "Metodo de pago"})
+	const [reference, setReference] = useState('')
+	const [payerId,setPayerId] = useState('')
 	const [patient, setPatient] = useState('')
-	const [amount, setAmount] = useState('0$')
+	const [amount, setAmount] = useState('0 Bs.')
 	const [dolarPrice, setDolarPrice] = useState(3)
 	const [id, setId] = useState("")
 
@@ -67,6 +69,37 @@ const EmitirFactura = () => {
 			
 		}
 	}
+
+	const submitIssueInvoice = async () => {
+		if(selectedBillable.value==0 || paymentMethod.value==0 || payerId=='' || patient=='' || amount=='0 Bs.'){
+			messageApi.open({
+				type: 'error',
+				content: 'Debe ingresar todos los datos'
+			})
+		}else{
+			const data = {
+				payerId: payerId,
+				billableItem: selectedBillable.value,
+				currency: paymentMethod.value,
+				reference: reference,
+				amount: amount,
+			}
+			const res = await issueInvoice(data)
+			if(res.status == 200){
+				messageApi.open({
+					type: 'success',
+					content: 'Factura creada con exito'
+				})
+				updateList()
+				onCancel()
+			}else{
+				messageApi.open({
+					type: 'error',
+					content: res.response.data
+				})
+			}
+		}
+	}
 	
 	return(
 		<div className='EmitirFactura Page'>
@@ -78,6 +111,7 @@ const EmitirFactura = () => {
 					<Input.Search
 						placeholder='Ingrese cedula'
 						id='searchInput'
+						value={payerId}
 						onSearch={(value) => getpatient(value)}
 						className='rowItem'/>
 					<Input
@@ -111,7 +145,7 @@ const EmitirFactura = () => {
 					<Input placeholder='Referencia' className='rowItem' disabled={paymentMethod !== 2}/>
 				</div>
 				
-				<Button>Emitir factura</Button>
+				<Button onClick={submitIssueInvoice}>Emitir factura</Button>
 			</div>
 
             <div className='EmptyFooter'/>
