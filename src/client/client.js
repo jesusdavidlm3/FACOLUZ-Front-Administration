@@ -15,8 +15,8 @@ export async function getIdInvoice(){
 	return await http.get('api/getIdInvoice', token, null)
 }
 
-export async function getSearchedPayer(identification){
-	return await http.get(`api/getSearchedPayer/${identification}`, token, null)
+export async function getSearchedPatient(identification){
+	return await http.get(`api/getSearchedPatient/${identification}`, token, null)
 }
 
 export async function getAllUsers(page) {

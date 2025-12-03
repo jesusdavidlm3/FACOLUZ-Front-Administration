@@ -2,6 +2,10 @@ export function searchOnList(list, id){
     return list.find(item => item.value == id).label
 }
 
+export function searchFullOnList(list, id){
+    return list.find(item => item.value == id)
+}
+
 export const instructionGradeList = [
     {label: 'Ninguno', value: 0},
     {label: 'Prescolar', value: 1},
@@ -95,17 +99,17 @@ export const changeLogsActionType = [
 ]
 
 export const BillableItems = [
-    {label: 'Cirugia', value: 1},
-    {label: 'Endodoncia', value: 2},
-    {label: 'Ortodoncia', value: 3},
-    {label: 'Peridoncia', value: 4},
-    {label: 'Protesis total', value: 5},
-    {label: 'Protesis parcial removible', value: 6},
-    {label: 'Protesis parcial fija', value: 7},
-    {label: 'CIA', value: 8},
-    {label: 'CIAN', value: 9},
-    {label: 'Emergencia de CIA', value: 10},
-    {label: 'Emergencia de CIAN', value: 11}
+    {label: 'Cirugia', value: 1, price: 5},
+    {label: 'Endodoncia', value: 2, price: 5},
+    {label: 'Ortodoncia', value: 3, price: 5},
+    {label: 'Peridoncia', value: 4, price: 5},
+    {label: 'Protesis total', value: 5, price: 5},
+    {label: 'Protesis parcial removible', value: 6, price: 5},
+    {label: 'Protesis parcial fija', value: 7, price: 5},
+    {label: 'CIA', value: 8, price: 5},
+    {label: 'CIAN', value: 9, price: 5},
+    {label: 'Emergencia de CIA', value: 10, price: 5},
+    {label: 'Emergencia de CIAN', value: 11, price: 5}
 ]
 
 export const paymentMethods = [

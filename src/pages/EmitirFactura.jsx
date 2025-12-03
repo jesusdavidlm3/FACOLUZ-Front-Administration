@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Input, Button, Divider, Select } from 'antd'
-import { getSearchedPayer, getIdInvoice } from '../client/client'
+import { getSearchedPatient, getIdInvoice } from '../client/client'
 import { appContext } from '../context/appContext'
 import * as lists from '../context/lists'
 
@@ -8,13 +8,30 @@ const EmitirFactura = () => {
 
 	const {contextHolder} = useContext(appContext)
 
-	const [paymentMethod, setPaymentMethod] = useState(null)
-	const [payer, setPayer] = useState('')
+	const [selectedBillable, setSelectedBillable] = useState({value: 0, label: "Servicio a cancelar:", price: 0})
+	const [paymentMethod, setPaymentMethod] = useState({value: 0, label: "Metodo de pago"})
+	const [patient, setPatient] = useState('')
+	const [amount, setAmount] = useState('0$')
+	const [dolarPrice, setDolarPrice] = useState(3)
 	const [id, setId] = useState("")
 
 	useEffect(() => {
 		getId()
 	}, [])
+
+	const updateAmount = (billable, payment) => {
+		const servicePrice = lists.searchFullOnList(lists.BillableItems, billable).price
+
+		console.log(servicePrice)
+		console.log(selectedBillable)
+		console.log(paymentMethod)
+
+		if(payment == 3){
+			setAmount(`${servicePrice}$`)
+		}else{
+			setAmount(`${(servicePrice * dolarPrice)} Bs.`)
+		}
+	}
 
 	const getId = async () => {
 		const response = await getIdInvoice()
@@ -26,12 +43,22 @@ const EmitirFactura = () => {
 		//setId(newId);
 	}
 
-	const getPayer = async (identification) =>{
+	const updateBillable = (e) => {
+		setSelectedBillable(e)
+		updateAmount(e, paymentMethod)
+	}
+
+	const updatePayment = (e) => {
+		setPaymentMethod(e)
+		updateAmount(selectedBillable, e)
+	}
+
+	const getpatient = async (identification) =>{
 		try {
-			const response = await getSearchedPayer(identification)
+			const response = await getSearchedPatient(identification)
 			if(response.status === 200){
-				const searchedPayer = response.data[0]
-				setPayer(searchedPayer)
+				const searchedpatient = response.data[0]
+				setPatient(searchedpatient)
 			}
 			else if(response.status === 404){
 				message.error('El pagador no se encuentra registrado')
@@ -51,30 +78,35 @@ const EmitirFactura = () => {
 					<Input.Search
 						placeholder='Ingrese cedula'
 						id='searchInput'
-						onSearch={(value) => getPayer(value)}
+						onSearch={(value) => getpatient(value)}
 						className='rowItem'/>
 					<Input
 						placeholder='Nombre:'
-						className='rowItem' enabled={payer === null}
-						value={payer !== null ? payer.name : ""}
+						className='rowItem' enabled={patient === null}
+						value={patient !== null ? patient.name : ""}
+						disabled={true}
 					/>
-					<Input placeholder='Telefono' className='rowItem' enabled={payer === null} value={payer !== null ? payer.phone : ""}/>
 				</div>
 				<div className='row'>
 					<Select 
 						options={lists.BillableItems}
 						className='rowItem'
-						defaultValue={{value: 0, label: "Servicio a cancelar"}}/>
+						defaultValue={{value: 0, label: "Servicio a cancelar", price: 0}}
+						value={selectedBillable}
+						onChange={updateBillable}/>
 					<Input 
 						placeholder='Monto:'
-						className='rowItem'/>
+						className='rowItem'
+						value={`Monto: ${amount}`}
+						disabled={true}/>
 				</div>
 				<div className='row'>
 					<Select 
 						options={lists.paymentMethods}
 						className='rowItem'
 						defaultValue={{value: 0, label: "Metodo de pago"}}
-						onChange={(value) => setPaymentMethod(value)}
+						value={paymentMethod}
+						onChange={updatePayment}
 					/>
 					<Input placeholder='Referencia' className='rowItem' disabled={paymentMethod !== 2}/>
 				</div>
