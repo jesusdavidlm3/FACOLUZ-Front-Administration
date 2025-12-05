@@ -6,7 +6,7 @@ import * as lists from '../context/lists'
 
 const EmitirFactura = () => {
 
-	const {contextHolder} = useContext(appContext)
+	const {messageApi, contextHolder} = useContext(appContext)
 
 	const [selectedBillable, setSelectedBillable] = useState({value: 0, label: "Servicio a cancelar:", price: 0})
 	const [paymentMethod, setPaymentMethod] = useState({value: 0, label: "Metodo de pago"})
@@ -23,10 +23,6 @@ const EmitirFactura = () => {
 
 	const updateAmount = (billable, payment) => {
 		const servicePrice = lists.searchFullOnList(lists.BillableItems, billable).price
-
-		console.log(servicePrice)
-		console.log(selectedBillable)
-		console.log(paymentMethod)
 
 		if(payment == 3){
 			setAmount(`${servicePrice}$`)
@@ -58,9 +54,11 @@ const EmitirFactura = () => {
 	const getpatient = async (identification) =>{
 		try {
 			const response = await getSearchedPatient(identification)
+			console.log('response (raw):', response); 
 			if(response.status === 200){
 				const searchedpatient = response.data[0]
 				setPatient(searchedpatient)
+
 			}
 			else if(response.status === 404){
 				message.error('El pagador no se encuentra registrado')
@@ -112,6 +110,7 @@ const EmitirFactura = () => {
 						placeholder='Ingrese cedula'
 						id='searchInput'
 						value={payerId}
+						onChange={(e) => setPayerId(e.target.value)}
 						onSearch={(value) => getpatient(value)}
 						className='rowItem'/>
 					<Input

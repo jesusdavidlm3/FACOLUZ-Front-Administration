@@ -12,7 +12,9 @@ export async function login(data){
 }
 
 export async function getIdInvoice(){
+	console.log(token)
 	return await http.get('api/getIdInvoice', token, null)
+	
 }
 
 export async function issueInvoice(data){
