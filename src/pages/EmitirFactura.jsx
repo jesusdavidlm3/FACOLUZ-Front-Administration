@@ -73,7 +73,7 @@ const EmitirFactura = () => {
 					type: 'success',
 					content: 'Factura creada con exito'
 				})
-				updateList()
+				resetForm()
 				onCancel()
 			}else{
 				messageApi.open({
@@ -84,6 +84,16 @@ const EmitirFactura = () => {
 		}
 	}
 	
+	function resetForm(){
+		setPatientId('')
+		setPatientName('')
+		setPatientPhone('')
+		setSelectedBillable({value: 0, label: "Servicio a cancelar:", price: 0})
+		setPaymentMethod({value: 0, label: "Metodo de pago"})
+		setReference('')
+		setAmount(0)
+	}
+
 	return(
 		<div className='EmitirFactura Page'>
 			<Divider className='PageTitle'><h1>Emitir factura</h1></Divider>

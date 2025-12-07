@@ -10,14 +10,20 @@ import Pagination from "../components/Pagination"
 const VerificarFactura = () => {
 	const {contextHolder} = useContext(appContext)
 
+	const [searchParam, setSearchParam] = useState('')
 	const [showList, setShowList] = useState([])
 	const [page, setPage] = useState(1)
 
 	const getContent = async() => {
-		const param = document.getElementById("SearchField").value
-		const res = await getInvoicesById(param, page)
+		const res = await getInvoicesById(searchParam, page)
 		setShowList(res.data)
 	}
+
+	useEffect(() => {
+		if(searchParam != ''){
+			getContent()
+		}
+	}, [page])
 
 	return(
 		<div className='VerificarFactura Page'>
@@ -26,13 +32,14 @@ const VerificarFactura = () => {
 			<div className='searchBar' >
 				<Input
 					placeholder='Ingrese cedula del paciente'
-					id="SearchField"/>
+					value={searchParam}
+					onChange={e => setSearchParam(e.target.value)}/>
 					<Button onClick={getContent}>Consultar</Button>
 			</div>
 			<div className='listContainer Content' >
 				<List bordered className='mainList'>
 					{ showList.map(item => (
-						<List.Item className='listItem' >
+						<List.Item className='listItem'>
 							<div className='info'>
 								<h4>{item.patientId} {item.patientName} - {item.billableitem} - {item.date} </h4>
 							</div>

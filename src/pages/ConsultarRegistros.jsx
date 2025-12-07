@@ -14,7 +14,7 @@ const ConsultarRegistros = () => {
 
     useEffect(() => {
         getContent()
-    }, [])
+    }, [page])
 
     const getContent = async() => {
         const res = await getAllInvoices(page)
@@ -29,9 +29,9 @@ const ConsultarRegistros = () => {
                 <List bordered className='mainList' size='small'>
                     {showList.map(item => (
                         <List.Item className='listItem'>
-                            <h3>
-								<h4>{item.patientId} {item.patientName} - {item.billableitem} - {item.date} </h4>
-                            </h3>
+                            <h4>
+                                {item.patientId} {item.patientName} - {item.billableitem} - {item.date}
+                            </h4>
                         </List.Item>
                     ))}
                 <Pagination page={page} setPage={setPage}/>
