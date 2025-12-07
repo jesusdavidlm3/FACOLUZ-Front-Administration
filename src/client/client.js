@@ -22,6 +22,14 @@ export async function issueInvoice(data){
 	return await http.post('api/issueInvoice', token, data)
 }
 
+export async function getInvoicesById(patientId, page){
+	return await http.get(`api/getInvoices/${patientId}/${page}`, token, null)
+}
+
+export async function getAllInvoices(page){
+	return await http.get(`api/getInvoices/${page}`, token, null)
+}
+
 export async function getSearchedPatient(identification){
 	return await http.get(`api/getSearchedPatient/${identification}`, token, null)
 }

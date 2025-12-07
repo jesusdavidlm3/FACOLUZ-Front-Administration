@@ -1,4 +1,4 @@
-import { getAllChangeLogs } from '../client/client'
+import { getAllInvoices } from '../client/client'
 import { useEffect, useState } from 'react'
 import { searchOnList } from '../context/lists'
 import * as lists from '../context/lists'
@@ -12,6 +12,15 @@ const ConsultarRegistros = () => {
     const [showList, setShowList] = useState([])
     const [page, setPage] = useState(1)
 
+    useEffect(() => {
+        getContent()
+    }, [])
+
+    const getContent = async() => {
+        const res = await getAllInvoices(page)
+        setShowList(res.data)
+    }
+
     return(
         <div className="ConsultarRegistros Page">
             <Divider className='PageTitle'><h1>Historial de facturacion</h1></Divider>
@@ -20,10 +29,8 @@ const ConsultarRegistros = () => {
                 <List bordered className='mainList' size='small'>
                     {showList.map(item => (
                         <List.Item className='listItem'>
-                            <h3>{item.modificatorName} {item.modificatorLastname}{" "}
-                                {searchOnList(lists.changeLogsActionType, item.changeType)}{" "}
-                                {item.modificatedName} {item.modificatedLastname} el{" "}
-                                {getDate(item.dateTime)} a las {getTime(item.dateTime)}
+                            <h3>
+								<h4>{item.patientId} {item.patientName} - {item.billableitem} - {item.date} </h4>
                             </h3>
                         </List.Item>
                     ))}
