@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { httpMethods } from './httpMethods'
 
 const http = new httpMethods()
@@ -25,7 +26,10 @@ export async function getSearchedPatient(identification){
 	return await http.get(`api/getSearchedPatient/${identification}`, token, null)
 }
 
-
+export async function getDolarPrice(){
+	let res = await axios.get("https://ve.dolarapi.com/v1/dolares/oficial")
+	return res.data.promedio
+}
 
 
 

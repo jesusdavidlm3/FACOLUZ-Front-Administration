@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react'
 import { Input, Button, Divider, Select } from 'antd'
-import { issueInvoice, getSearchedPatient, getIdInvoice } from '../client/client'
+import { issueInvoice, getSearchedPatient, getIdInvoice, getDolarPrice } from '../client/client'
 import { appContext } from '../context/appContext'
 import * as lists from '../context/lists'
 
@@ -8,37 +8,36 @@ const EmitirFactura = () => {
 
 	const {messageApi, contextHolder} = useContext(appContext)
 
+	//Patient Data
+	const [patientId, setPatientId] = useState('')
+	const [patientName, setPatientName] = useState('')
+	const [patientPhone, setPatientPhone] = useState('')
+
+	//Payment Data
 	const [selectedBillable, setSelectedBillable] = useState({value: 0, label: "Servicio a cancelar:", price: 0})
 	const [paymentMethod, setPaymentMethod] = useState({value: 0, label: "Metodo de pago"})
 	const [reference, setReference] = useState('')
-	const [payerId,setPayerId] = useState('')
-	const [patient, setPatient] = useState('')
-	const [amount, setAmount] = useState('0 Bs.')
-	const [dolarPrice, setDolarPrice] = useState(3)
-	const [id, setId] = useState("")
+	const [amount, setAmount] = useState(0)
+	const [dolarPrice, setDolarPrice] = useState(0)
 
 	useEffect(() => {
-		getId()
+		getDolar()
 	}, [])
+
+	async function getDolar(){
+		const dolar = await getDolarPrice()
+		console.log(dolar)
+		setDolarPrice(dolar)
+	}
 
 	const updateAmount = (billable, payment) => {
 		const servicePrice = lists.searchFullOnList(lists.BillableItems, billable).price
 
 		if(payment == 3){
-			setAmount(`${servicePrice}$`)
+			setAmount(servicePrice)
 		}else{
-			setAmount(`${(servicePrice * dolarPrice)} Bs.`)
+			setAmount((servicePrice * dolarPrice))
 		}
-	}
-
-	const getId = async () => {
-		const response = await getIdInvoice()
-		if(response.status === 200){
-			setId(response.data.id)
-		return
-		}
-		const newId = "001"; // Ejemplo de ID
-		//setId(newId);
 	}
 
 	const updateBillable = (e) => {
@@ -51,36 +50,22 @@ const EmitirFactura = () => {
 		updateAmount(selectedBillable, e)
 	}
 
-	const getpatient = async (identification) =>{
-		try {
-			const response = await getSearchedPatient(identification)
-			console.log('response (raw):', response); 
-			if(response.status === 200){
-				const searchedpatient = response.data[0]
-				setPatient(searchedpatient)
-
-			}
-			else if(response.status === 404){
-				message.error('El pagador no se encuentra registrado')
-			}
-		} catch (error) {
-			
-		}
-	}
-
 	const submitIssueInvoice = async () => {
-		if(selectedBillable.value==0 || paymentMethod.value==0 || payerId=='' || patient=='' || amount=='0 Bs.'){
+		if(selectedBillable.value==0 || paymentMethod.value==0 || patientId=='' || patientName=='' || amount=='0 Bs.' || patientPhone==''){
 			messageApi.open({
 				type: 'error',
 				content: 'Debe ingresar todos los datos'
 			})
 		}else{
 			const data = {
-				payerId: payerId,
-				billableItem: selectedBillable.value,
-				currency: paymentMethod.value,
-				reference: reference,
+				patientId: patientId,
+				patientName: patientName,
+				patientPhone: patientPhone,
+				billableItem: selectedBillable,
 				amount: amount,
+				currency: paymentMethod,
+				reference: reference,
+				changeRate: dolarPrice
 			}
 			const res = await issueInvoice(data)
 			if(res.status == 200){
@@ -104,20 +89,23 @@ const EmitirFactura = () => {
 			<Divider className='PageTitle'><h1>Emitir factura</h1></Divider>
 			{contextHolder}
 			<div className='listContainer Content' >
-				<h3>Nº de factura {id}</h3>
 				<div className='row'>
-					<Input.Search
-						placeholder='Ingrese cedula'
-						id='searchInput'
-						value={payerId}
-						onChange={(e) => setPayerId(e.target.value)}
-						onSearch={(value) => getpatient(value)}
+					<Input
+						placeholder='cedula:'
+						value={patientId}
+						onChange={e => setPatientId(e.target.value)}
 						className='rowItem'/>
 					<Input
 						placeholder='Nombre:'
-						className='rowItem' enabled={patient === null}
-						value={patient !== null ? patient.name : ""}
-						disabled={true}
+						className='rowItem'
+						value={patientName}
+						onChange={e => setPatientName(e.target.value)}
+					/>
+					<Input
+						placeholder='Telefono:'
+						className='rowItem'
+						value={patientPhone}
+						onChange={e => setPatientPhone(e.target.value)}
 					/>
 				</div>
 				<div className='row'>
@@ -141,7 +129,12 @@ const EmitirFactura = () => {
 						value={paymentMethod}
 						onChange={updatePayment}
 					/>
-					<Input placeholder='Referencia' className='rowItem' disabled={paymentMethod !== 2}/>
+					<Input
+						placeholder='Referencia'
+						className='rowItem'
+						disabled={paymentMethod !== 2}
+						value={reference}
+						onChange={e => setReference(e.target.value)}/>
 				</div>
 				
 				<Button onClick={submitIssueInvoice}>Emitir factura</Button>
