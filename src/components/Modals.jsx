@@ -32,6 +32,40 @@ export const LogoutModal = ({open, onCancel}) => {
 	)
 }
 
+export const VerifyInvoiceModal = ({open, onCancel, info}) => {
+
+	const {messageApi} = useContext(appContext)
+	const [loading, setLoading] = useState(false)
+
+	const verifyInvoice = async () => {
+		setLoading(true)
+		let res = await reactivateUser(info.id)
+		if(res.status == 200){
+			messageApi.open({
+				type: 'success',
+				content: 'Factura verificada con exito'
+			})
+			onCancel()
+		}else{
+			messageApi.open({
+				type: 'error',
+				content: 'Error al verificar factura'
+			})
+		}
+		}
+	return(
+		<Modal
+			title='Verificar factura?'
+			open={open}
+			closable={false}
+			footer={[
+				<Button disabled={loading} variant='solid' color='primary' onClick={verifyInvoice} >Recibido</Button>,
+				<Button disabled={loading} variant='solid' color='primary' onClick={verifyInvoice} >Rechazada</Button>,
+				<Button onClick={onCancel} variant='text' >Cancelar</Button>
+			]}
+		/>)
+	}
+
 export const GenerateReportModal = ({open, onCancel}) => {
 	
 
