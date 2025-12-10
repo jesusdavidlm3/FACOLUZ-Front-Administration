@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react'
 import { appContext } from '../context/appContext'
 import * as lists from '../context/lists'
 import { encrypt } from '../functions/hash'
-import { reactivateUser, deleteUser, createUser, changePassword, changeUserType ,getIdUsers} from '../client/client'
+import { verifyInvoice, deleteUser, createUser, changePassword, changeUserType ,getIdUsers} from '../client/client'
 import React from 'react'
 import { routerContext } from '../context/routerContext'
 
@@ -32,38 +32,50 @@ export const LogoutModal = ({open, onCancel}) => {
 	)
 }
 
-export const VerifyInvoiceModal = ({open, onCancel, info}) => {
-
+export const VerifyInvoiceModal = ({open, onCancel, invoice}) => {
 	const {messageApi} = useContext(appContext)
 	const [loading, setLoading] = useState(false)
+	console.log(invoice)
 
-	const verifyInvoice = async () => {
+	const handleVerify = async (data) => {
 		setLoading(true)
-		let res = await reactivateUser(info.id)
+		let res = await verifyInvoice({idParam: invoice.id, status: data})
 		if(res.status == 200){
 			messageApi.open({
 				type: 'success',
 				content: 'Factura verificada con exito'
 			})
+			setLoading(false)
 			onCancel()
 		}else{
 			messageApi.open({
 				type: 'error',
 				content: 'Error al verificar factura'
 			})
+			setLoading(false)
 		}
-		}
+	}
 	return(
 		<Modal
-			title='Verificar factura?'
+			title='Verificar factura'
 			open={open}
 			closable={false}
 			footer={[
-				<Button disabled={loading} variant='solid' color='primary' onClick={verifyInvoice} >Recibido</Button>,
-				<Button disabled={loading} variant='solid' color='primary' onClick={verifyInvoice} >Rechazada</Button>,
+				<Button disabled={loading} variant='solid' color='primary'  onClick={() => handleVerify('Recibida')} >Recibido</Button>,
+				<Button disabled={loading} variant='solid' color='primary' onClick={() => handleVerify('Rechazada')} >Rechazada</Button>,
 				<Button onClick={onCancel} variant='text' >Cancelar</Button>
 			]}
-		/>)
+		>
+			<div style={{display: 'flex', flexDirection: 'column', gap: '5px'}}>
+				<p><strong>Paciente:</strong> {invoice.patientName} - {invoice.patientId}</p>
+				<p><strong>Servicio facturado:</strong> {invoice.billableitem}</p>
+				<p><strong>Monto:</strong> {invoice.amount} </p>
+				<p><strong>Moneda:</strong> {invoice.currency} </p>
+				<p><strong>Fecha de emision:</strong> {invoice.date} </p>
+				{invoice.reference && <p><strong>Referencia de pago:</strong> {invoice.reference} </p>}
+				<p><strong>Estado:</strong> {invoice.status} </p>
+			</div>
+		</Modal>)
 	}
 
 export const GenerateReportModal = ({open, onCancel}) => {

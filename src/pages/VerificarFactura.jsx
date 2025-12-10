@@ -1,9 +1,9 @@
 import React,{ useContext, useEffect, useState } from 'react'
 import { Input, Button, Tooltip, List, Divider } from 'antd'
-import {ApiOutlined } from '@ant-design/icons'
+import {CheckCircleOutlined } from '@ant-design/icons'
 import { getInvoicesVerification, getinvoicesVerificationById } from '../client/client'
 import { searchOnList, identificationList, userTypeList } from '../context/lists'
-import { ReactivateUserModal as ReactivateUser } from '../components/Modals'
+import { VerifyInvoiceModal as VerifyInvoice } from '../components/Modals'
 import { appContext } from '../context/appContext'
 import Pagination from "../components/Pagination"
 
@@ -13,7 +13,8 @@ const VerificarFactura = () => {
 	const [showList, setShowList] = useState([])
 	const [selectedItem, setSelectedItem] = useState('')
 	const [page, setPage] = useState(1)
-
+	//Control de modal
+	const [verifyModal, setVerifyModal] = useState(false)
 	const getContent = async() => {
 		if(searchParam!=''){
 			const res = await getinvoicesVerificationById(searchParam, page)
@@ -49,7 +50,7 @@ const VerificarFactura = () => {
 								<h4>{item.patientId} {item.patientName} - {item.billableitem} - {item.date} </h4>
 							</div>
 							<div className='buttons'>
-								<Tooltip onClick={() => {setSelectedItem(item); setReactivateModal(true)}} title='Verificar'><Button  variant='solid' color='primary' size='large' title='Verificar'/></Tooltip>
+								<Tooltip onClick={() => {setSelectedItem(item); setVerifyModal(true)}} title='Verificar'><Button  variant='solid' shape='circle' color='primary' size='large' icon ={<CheckCircleOutlined />} title='Verificar'/></Tooltip>
 							</div>
 						</List.Item>
 					)) }
@@ -59,8 +60,11 @@ const VerificarFactura = () => {
 
 			<div className='EmptyFooter'/>
 
-			
-
+			<VerifyInvoice 
+				open={verifyModal}
+				onCancel={()=>{setVerifyModal(false); setSelectedItem('')}}
+				invoice={selectedItem} 
+			/>
 		</div>
 	)
 }
