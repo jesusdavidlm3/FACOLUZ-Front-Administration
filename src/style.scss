@@ -423,6 +423,15 @@ body{
 }
 .ConsultarRegistros{
 	@include pageBasis;
+	.searchBar{
+		// background-color: var(--moduleColor);
+		border-radius: var(--moduleRadius);
+		padding: var(--modulepPadding);
+		display: flex;
+		align-items: center;
+		gap: 15px;
+		width: 95%;
+	}
 	.generateReport{
 		display: block;
 		align-items: right;

@@ -106,10 +106,12 @@ export const BillableItems = [
     {label: 'Protesis total', value: 5, price: 5},
     {label: 'Protesis parcial removible', value: 6, price: 5},
     {label: 'Protesis parcial fija', value: 7, price: 5},
-    {label: 'CIA', value: 8, price: 5},
-    {label: 'CIAN', value: 9, price: 5},
-    {label: 'Emergencia de CIA', value: 10, price: 5},
-    {label: 'Emergencia de CIAN', value: 11, price: 5}
+    {label: 'CIA (Consulta)', value: 8, price: 5},
+    {label: 'CIAN (Consulta)', value: 9, price: 5},
+    {label: 'CIA (Historia)', value: 10, price: 10},
+    {label: 'CIAN (Historia)', value: 11, price: 10},
+    {label: 'Emergencia de CIA', value: 12, price: 5},
+    {label: 'Emergencia de CIAN', value: 13, price: 5}
 ]
 
 export const paymentMethods = [

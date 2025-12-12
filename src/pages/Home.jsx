@@ -1,6 +1,21 @@
-import React from 'react'
-
+import React, { useEffect, useContext, useState } from 'react'
+import { getSettings } from '../client/client'
+import { appContext } from '../context/appContext'
 const Home = () => {
+	const {setPrices} = useContext(appContext)
+
+	useEffect(() => {
+		fetchSettings()
+	}, [])
+
+	const fetchSettings = async () => {
+		const res = await getSettings()
+		if (res?.data) {
+			const pricesObj = Object.fromEntries(res.data.map(({ label, value }) => [label, value]));
+			setPrices(pricesObj)
+		}
+	}
+
 	return(
 		<div className='HomePage'>
 			<div className='BackgroundPage'>

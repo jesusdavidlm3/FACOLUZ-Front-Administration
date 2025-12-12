@@ -1,17 +1,22 @@
 import { getAllInvoices } from '../client/client'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { searchOnList } from '../context/lists'
 import * as lists from '../context/lists'
 import React from 'react'
-import { Button, Divider, List } from 'antd'
+import { Input, Button, Tooltip, List, Divider } from 'antd'
+import {CheckCircleOutlined } from '@ant-design/icons'
 import { getTime, getDate } from '../functions/formatDates'
+import { appContext } from '../context/appContext'
 import Pagination from "../components/Pagination"
 
 const ConsultarRegistros = () => {
-
-    const [showList, setShowList] = useState([])
-    const [page, setPage] = useState(1)
-
+    const {contextHolder} = useContext(appContext)
+	const [searchParam, setSearchParam] = useState('')
+	const [showList, setShowList] = useState([])
+	const [selectedItem, setSelectedItem] = useState('')
+	const [page, setPage] = useState(1)
+	//Control de modal
+	const [invoiceModal, setInvoiceModal] = useState(false)
     useEffect(() => {
         getContent()
     }, [page])
@@ -23,21 +28,34 @@ const ConsultarRegistros = () => {
 
     return(
         <div className="ConsultarRegistros Page">
-            <Divider className='PageTitle'><h1>Historial de facturacion</h1></Divider>
-            <Button className='generateReport' type='primary' >Generar Reporte</Button>
-            <div className='listContainer Content'>
-                <List bordered className='mainList' size='small'>
-                    {showList.map(item => (
-                        <List.Item className='listItem'>
-                            <h4>
-                                {item.patientId} {item.patientName} - {item.billableitem} - {item.date}
-                            </h4>
-                        </List.Item>
-                    ))}
-                <Pagination page={page} setPage={setPage}/>
-                </List>
-            </div>
-            <div className='EmptyFooter'/>
+            <Divider className='PageTitle'><h1>Historial de Facturacion</h1></Divider>
+            <Button className='generateReport' type='primary'>Generar Reporte</Button>
+			{contextHolder}
+			<div className='searchBar' >
+				<Input
+					placeholder='Ingrese cedula del paciente'
+					value={searchParam}
+					onChange={e => setSearchParam(e.target.value)}/>
+					<Button onClick={getContent}>Consultar</Button>
+			</div>
+			<div className='listContainer Content' >
+				<List bordered className='mainList'>
+					{ showList && showList.map(item => (
+						<List.Item className='listItem'>
+							<div className='info'>
+								<h4>{getDate(item.date)} - {getTime(item.date)} -- {item.patientId} - {item.patientName} -- {item.billableitem}  </h4>
+							</div>
+							<div className='buttons'>
+								<Tooltip onClick={() => {setSelectedItem(item); setVerifyModal(true)}} title='Verificar'><Button  variant='solid' shape='circle' color='primary' size='large' icon ={<CheckCircleOutlined />} title='Verificar'/></Tooltip>
+							</div>
+						</List.Item>
+					)) }
+					<Pagination page={page} setPage={setPage}/>
+				</List>
+			</div>
+
+			<div className='EmptyFooter'/>
+
         </div>
     )
 }

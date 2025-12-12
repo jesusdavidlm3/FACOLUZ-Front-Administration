@@ -6,6 +6,7 @@ import { encrypt } from '../functions/hash'
 import { verifyInvoice, deleteUser, createUser, changePassword, changeUserType ,getIdUsers} from '../client/client'
 import React from 'react'
 import { routerContext } from '../context/routerContext'
+import { getDate, getTime } from '../functions/formatDateTime'
 
 export const LogoutModal = ({open, onCancel}) => {
 
@@ -35,7 +36,6 @@ export const LogoutModal = ({open, onCancel}) => {
 export const VerifyInvoiceModal = ({open, onCancel, invoice}) => {
 	const {messageApi} = useContext(appContext)
 	const [loading, setLoading] = useState(false)
-	console.log(invoice)
 
 	const handleVerify = async (data) => {
 		setLoading(true)
@@ -71,7 +71,7 @@ export const VerifyInvoiceModal = ({open, onCancel, invoice}) => {
 				<p><strong>Servicio facturado:</strong> {invoice.billableitem}</p>
 				<p><strong>Monto:</strong> {invoice.amount} </p>
 				<p><strong>Moneda:</strong> {invoice.currency} </p>
-				<p><strong>Fecha de emision:</strong> {invoice.date} </p>
+				<p><strong>Fecha de emision:</strong> {getDate(invoice.date)} - {getTime(invoice.date)} </p>
 				{invoice.reference && <p><strong>Referencia de pago:</strong> {invoice.reference} </p>}
 				<p><strong>Estado:</strong> {invoice.status} </p>
 			</div>
