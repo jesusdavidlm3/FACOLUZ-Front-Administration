@@ -10,7 +10,7 @@ import { appContext } from '../context/appContext'
 import Pagination from "../components/Pagination"
 
 const ConsultarRegistros = () => {
-    const {contextHolder} = useContext(appContext)
+    const {contextHolder, messageApi} = useContext(appContext)
 	const [searchParam, setSearchParam] = useState('')
 	const [showList, setShowList] = useState([])
 	const [selectedItem, setSelectedItem] = useState('')
@@ -26,10 +26,25 @@ const ConsultarRegistros = () => {
         setShowList(res.data)
     }
 
+	const getDailyReport = async() => {
+		const res = await window.api.getDailyReport()
+		if(res.ok == true){
+			messageApi.open({
+				type: 'success',
+				content: 'Reporte guardado en descargas'
+			})
+		}else{
+			messageApi.open({
+				type: 'error',
+				content: 'ah ocurrido un error al guardar el reporte'
+			})
+		}
+	}
+
     return(
         <div className="ConsultarRegistros Page">
             <Divider className='PageTitle'><h1>Historial de Facturacion</h1></Divider>
-            <Button className='generateReport' type='primary' onClick={() => window.api.getDailyReport()}>Generar Reporte</Button>
+            <Button className='generateReport' type='primary' onClick={getDailyReport}>Generar Reporte</Button>
 			{contextHolder}
 			<div className='searchBar' >
 				<Input

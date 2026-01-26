@@ -39,7 +39,6 @@ ipcMain.handle('get_Backend_Address', () => {
 })
 
 ipcMain.handle('getDailyReport', async() => {
-  console.log("se esta llamando")
   const res = await axios.get('http://localhost:3005/api/getDailyReport', {
     responseType: 'arraybuffer'
   })
