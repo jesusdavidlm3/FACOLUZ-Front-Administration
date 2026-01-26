@@ -8,3 +8,7 @@ contextBridge.exposeInMainWorld('env', {
         return await ipcRenderer.invoke('get_Backend_Address')
     }
 })
+
+contextBridge.exposeInMainWorld('api', {
+    getDailyReport: () => ipcRenderer.invoke('getDailyReport')
+})

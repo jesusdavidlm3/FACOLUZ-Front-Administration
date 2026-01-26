@@ -29,7 +29,7 @@ const ConsultarRegistros = () => {
     return(
         <div className="ConsultarRegistros Page">
             <Divider className='PageTitle'><h1>Historial de Facturacion</h1></Divider>
-            <Button className='generateReport' type='primary'>Generar Reporte</Button>
+            <Button className='generateReport' type='primary' onClick={() => window.api.getDailyReport()}>Generar Reporte</Button>
 			{contextHolder}
 			<div className='searchBar' >
 				<Input

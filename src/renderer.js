@@ -29,3 +29,8 @@
 import './index.css';
 
 console.log('👋 This message is being logged by "renderer.js", included via Vite');
+
+document.getElementById("getDailyReportButton").addEventListener("click", async() => {
+    console.log("se disparo el evento al renderer")
+    const res = await window.api.getDailyReport()
+})

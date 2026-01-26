@@ -1,6 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
+import axios from 'axios';
+import { writeFileSync } from 'node:fs';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (started) {
@@ -34,6 +36,19 @@ const createWindow = () => {
 
 ipcMain.handle('get_Backend_Address', () => {
   return process.env.VITE_BACK_ADDRESS
+})
+
+ipcMain.handle('getDailyReport', async() => {
+  console.log("se esta llamando")
+  const res = await axios.get('http://localhost:3005/api/getDailyReport', {
+    responseType: 'arraybuffer'
+  })
+  const currentDate = new Date
+  const reportDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate())
+  const pdfBuffer = Buffer.from(res.data)
+  const filePath = path.join(app.getPath('downloads'), `Reporte del ${reportDate.toDateString()}.pdf`)
+  writeFileSync(filePath, pdfBuffer)
+  return {ok: true, path: filePath}
 })
 
 // This method will be called when Electron has finished
