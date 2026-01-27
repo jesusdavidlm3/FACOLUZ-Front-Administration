@@ -8,6 +8,7 @@ import {CheckCircleOutlined } from '@ant-design/icons'
 import { getTime, getDate } from '../functions/formatDates'
 import { appContext } from '../context/appContext'
 import Pagination from "../components/Pagination"
+import { VerifyInvoiceModal } from '../components/Modals'
 
 const ConsultarRegistros = () => {
     const {contextHolder, messageApi} = useContext(appContext)
@@ -61,7 +62,19 @@ const ConsultarRegistros = () => {
 								<h4>{getDate(item.date)} - {getTime(item.date)} -- {item.patientId} - {item.patientName} -- {item.billableitem}  </h4>
 							</div>
 							<div className='buttons'>
-								<Tooltip onClick={() => {setSelectedItem(item); setVerifyModal(true)}} title='Verificar'><Button  variant='solid' shape='circle' color='primary' size='large' icon ={<CheckCircleOutlined />} title='Verificar'/></Tooltip>
+								<Tooltip
+									onClick={() => {setSelectedItem(item); setInvoiceModal(true)}}
+									title='Verificar'
+								>
+									<Button 
+										variant='solid'
+										shape='circle'
+										color='primary'
+										size='large'
+										icon ={<CheckCircleOutlined />}
+										title='Verificar'
+									/>
+								</Tooltip>
 							</div>
 						</List.Item>
 					)) }
@@ -70,7 +83,11 @@ const ConsultarRegistros = () => {
 			</div>
 
 			<div className='EmptyFooter'/>
-
+			<VerifyInvoiceModal 
+				invoice={selectedItem}
+				open={invoiceModal}
+				onCancel={() => setInvoiceModal(false)}
+			/>
         </div>
     )
 }
