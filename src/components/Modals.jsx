@@ -33,7 +33,7 @@ export const LogoutModal = ({open, onCancel}) => {
 	)
 }
 
-export const VerifyInvoiceModal = ({open, onCancel, invoice}) => {
+export const VerifyInvoiceModal = ({open, onCancel, invoice, updateList}) => {
 	const {messageApi} = useContext(appContext)
 	const [loading, setLoading] = useState(false)
 
@@ -43,14 +43,15 @@ export const VerifyInvoiceModal = ({open, onCancel, invoice}) => {
 		if(res.status == 200){
 			messageApi.open({
 				type: 'success',
-				content: 'Factura verificada con exito'
+				content: 'Estado de la factura actualizado'
 			})
 			setLoading(false)
+			updateList(data)
 			onCancel()
 		}else{
 			messageApi.open({
 				type: 'error',
-				content: 'Error al verificar factura'
+				content: 'ah ocurrido un error'
 			})
 			setLoading(false)
 		}

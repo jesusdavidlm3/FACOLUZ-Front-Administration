@@ -24,6 +24,7 @@ const ConsultarRegistros = () => {
 
     const getContent = async() => {
         const res = await getAllInvoices(page)
+		console.log(res.data)
         setShowList(res.data)
     }
 
@@ -40,6 +41,20 @@ const ConsultarRegistros = () => {
 				content: 'ah ocurrido un error al guardar el reporte'
 			})
 		}
+	}
+
+	const updateList = (newStatus) => {
+		console.log("ejecuta")
+		const list = showList
+		const i = showList.findIndex((i) => i.id == selectedItem.id)
+		console.log({Position: i, item: list[i], id: selectedItem.id})
+		list[i].status = newStatus
+		setShowList(list)
+		// list.
+		// const newList = oldList.filter(i => i.id !== selectedItem)
+		// const newItem = oldList.find(i => i.id === selectedItem)
+		// newItem.status = newStatus
+		// newList
 	}
 
     return(
@@ -63,18 +78,40 @@ const ConsultarRegistros = () => {
 							</div>
 							<div className='buttons'>
 								<Tooltip
-									onClick={() => {setSelectedItem(item); setInvoiceModal(true)}}
 									title='Verificar'
 								>
-									<Button 
+									{item.status === "Pendiente" && <Button 
 										variant='solid'
 										shape='circle'
 										color='primary'
 										size='large'
 										icon ={<CheckCircleOutlined />}
 										title='Verificar'
-									/>
+										onClick={() => {setSelectedItem(item); setInvoiceModal(true)}}
+									/>}
 								</Tooltip>
+
+								{item.status === "Recibida" && <Button 
+									variant='solid'
+									shape='circle'
+									color='primary'
+									size='large'
+									icon ={<CheckCircleOutlined />}
+									title='Verificar'
+									onClick={() => {setSelectedItem(item); setInvoiceModal(true)}}
+									disabled={true}
+								/>}
+
+								{item.status === "Rechazada" && <Button 
+									variant='solid'
+									shape='circle'
+									color='primary'
+									size='large'
+									icon ={<CheckCircleOutlined />}
+									title='Verificar'
+									onClick={() => {setSelectedItem(item); setInvoiceModal(true)}}
+									disabled={true}
+								/>}
 							</div>
 						</List.Item>
 					)) }
@@ -87,6 +124,7 @@ const ConsultarRegistros = () => {
 				invoice={selectedItem}
 				open={invoiceModal}
 				onCancel={() => setInvoiceModal(false)}
+				updateList={updateList}
 			/>
         </div>
     )
