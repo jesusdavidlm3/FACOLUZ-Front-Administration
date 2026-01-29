@@ -1,4 +1,4 @@
-import { getAllInvoices } from '../client/client'
+import { getAllInvoices, getInvoicesById } from '../client/client'
 import { useContext, useEffect, useState } from 'react'
 import { searchOnList } from '../context/lists'
 import * as lists from '../context/lists'
@@ -18,15 +18,30 @@ const ConsultarRegistros = () => {
 	const [page, setPage] = useState(1)
 	//Control de modal
 	const [invoiceModal, setInvoiceModal] = useState(false)
+
     useEffect(() => {
         getContent()
     }, [page])
 
     const getContent = async() => {
-        const res = await getAllInvoices(page)
-		console.log(res.data)
-        setShowList(res.data)
+		setSearchParam("")
+		const res = await getAllInvoices(page)
+		// console.log(res.data)
+		setShowList(res.data)
     }
+
+	const searchInvoices = async() => {
+		const res = await getInvoicesById(searchParam, page)
+		if(res.data.length === 0){
+			messageApi.open({
+				type: 'error',
+				content: "no se han encontrado resultados"
+			})
+			setSearchParam("")
+		}else{
+			setShowList(res.data)
+		}
+	}
 
 	const getDailyReport = async() => {
 		const res = await window.api.getDailyReport()
@@ -47,14 +62,9 @@ const ConsultarRegistros = () => {
 		console.log("ejecuta")
 		const list = showList
 		const i = showList.findIndex((i) => i.id == selectedItem.id)
-		console.log({Position: i, item: list[i], id: selectedItem.id})
+		// console.log({Position: i, item: list[i], id: selectedItem.id})
 		list[i].status = newStatus
 		setShowList(list)
-		// list.
-		// const newList = oldList.filter(i => i.id !== selectedItem)
-		// const newItem = oldList.find(i => i.id === selectedItem)
-		// newItem.status = newStatus
-		// newList
 	}
 
     return(
@@ -67,7 +77,8 @@ const ConsultarRegistros = () => {
 					placeholder='Ingrese cedula del paciente'
 					value={searchParam}
 					onChange={e => setSearchParam(e.target.value)}/>
-					<Button onClick={getContent}>Consultar</Button>
+					<Button onClick={searchInvoices}>Consultar</Button>
+					<Button onClick={getContent}>Ver todo</Button>
 			</div>
 			<div className='listContainer Content' >
 				<List bordered className='mainList'>

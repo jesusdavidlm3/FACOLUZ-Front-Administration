@@ -15,6 +15,7 @@ const VerificarFactura = () => {
 	const [page, setPage] = useState(1)
 	//Control de modal
 	const [verifyModal, setVerifyModal] = useState(false)
+	
 	const getContent = async() => {
 		if(searchParam!=''){
 			const res = await getinvoicesVerificationById(searchParam, page)
@@ -24,8 +25,6 @@ const VerificarFactura = () => {
 		const res = await getInvoicesVerification(page)
 		setShowList(res.data)
 	}
-
-	
 
 	useEffect(() => {
 		getContent()
