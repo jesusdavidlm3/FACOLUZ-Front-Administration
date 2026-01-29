@@ -77,41 +77,41 @@ const ConsultarRegistros = () => {
 								<h4>{getDate(item.date)} - {getTime(item.date)} -- {item.patientId} - {item.patientName} -- {item.billableitem}  </h4>
 							</div>
 							<div className='buttons'>
-								<Tooltip
-									title='Verificar'
-								>
-									{item.status === "Pendiente" && <Button 
-										variant='solid'
-										shape='circle'
-										color='primary'
-										size='large'
-										icon ={<CheckCircleOutlined />}
-										title='Verificar'
-										onClick={() => {setSelectedItem(item); setInvoiceModal(true)}}
-									/>}
+								{item.status === "Pendiente" && 
+									<Tooltip
+										title='Verificar factura'
+									>
+										<Button 
+											variant='solid'
+											shape='circle'
+											color='primary'
+											size='large'
+											icon ={<CheckCircleOutlined />}
+											title='Verificar'
+											onClick={() => {setSelectedItem(item); setInvoiceModal(true)}}
+										/>
+								</Tooltip>}
+
+								{item.status === "Recibida" && <div style={{display: 'flex', alignItems: 'center', gap: "5px"}}>
+									<h3 style={{color: "green"}}>Factura Verificada</h3>
+									<Tooltip
+										title='Anular factura'
+									>
+										<Button 
+											variant='solid'
+											shape='circle'
+											color='danger'
+											size='large'
+											icon ={<CheckCircleOutlined />}
+											title='Anular Factura'
+											// onClick={() => {setSelectedItem(item); setInvoiceModal(true)}}
+										/>
 								</Tooltip>
+								</div>}
 
-								{item.status === "Recibida" && <Button 
-									variant='solid'
-									shape='circle'
-									color='primary'
-									size='large'
-									icon ={<CheckCircleOutlined />}
-									title='Verificar'
-									onClick={() => {setSelectedItem(item); setInvoiceModal(true)}}
-									disabled={true}
-								/>}
-
-								{item.status === "Rechazada" && <Button 
-									variant='solid'
-									shape='circle'
-									color='primary'
-									size='large'
-									icon ={<CheckCircleOutlined />}
-									title='Verificar'
-									onClick={() => {setSelectedItem(item); setInvoiceModal(true)}}
-									disabled={true}
-								/>}
+								{item.status === "Rechazada" && 
+									<h3 style={{color: "red"}}>Factura rechazada</h3>
+								}
 							</div>
 						</List.Item>
 					)) }
