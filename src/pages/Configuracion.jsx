@@ -1,10 +1,10 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Divider, Input, Button, Form} from 'antd';
 import { appContext } from "../context/appContext";
-import { getSettings} from "../client/client";
+import { savePriceChanges } from "../client/client";
 
 const Configuracion = () => {
-    const {messageApi,contextHolder, prices,setPrices} = useContext(appContext);
+    const {messageApi,contextHolder, prices, setPrices} = useContext(appContext);
     const [ciaConsulta, setCiaConsulta] = useState(prices.ciaConsulta);
     const [ciaHistoria, setCiaHistoria] = useState(prices.ciaHistoria);
     const [cianConsulta, setCianConsulta] = useState(prices.cianConsulta);
@@ -88,13 +88,14 @@ const Configuracion = () => {
             EmergenciaCIAN: emergenciaCIAN,
         };
 
-        try {
+        const res = await savePriceChanges(newPrices)
+        if(res.status === 200){
             await setPrices(newPrices);
             messageApi.open({
                 type: 'success',
                 content: 'Precios cambiados con exito'
             });
-        } catch (error) {
+        }else{
             messageApi.open({
                 type: 'error',
                 content: 'Error al guardar la configuración'

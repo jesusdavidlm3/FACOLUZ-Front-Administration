@@ -51,12 +51,12 @@ export async function getDolarPrice(){
 	return res.data.promedio
 }
 
-export async function getSettings(){
-	return await http.get('api/getSettings', token, null)
-}
-
 export async function getPrices(){
 	return await http.get('api/prices', token, null)
+}
+
+export async function savePriceChanges(newPrices){
+	return await http.post('api/prices', token, newPrices)
 }
 
 // export async function getSearchedUsers(text, page){

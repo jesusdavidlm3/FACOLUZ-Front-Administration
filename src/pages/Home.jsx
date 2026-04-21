@@ -13,7 +13,6 @@ const Home = () => {
 		if (res?.data) {
 			const pricesObj = Object.fromEntries(res.data.map(({ label, value }) => [label, value]));
 			setPrices(pricesObj)
-			console.log(pricesObj)
 		}
 	}
 
