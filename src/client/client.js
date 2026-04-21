@@ -55,7 +55,9 @@ export async function getSettings(){
 	return await http.get('api/getSettings', token, null)
 }
 
-
+export async function getPrices(){
+	return await http.get('api/prices', token, null)
+}
 
 // export async function getSearchedUsers(text, page){
 // 	return await http.get(`api/getSearchedUsers/${text}/${page}`, token, null)

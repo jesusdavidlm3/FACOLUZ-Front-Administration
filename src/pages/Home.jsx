@@ -1,18 +1,19 @@
 import React, { useEffect, useContext, useState } from 'react'
-import { getSettings } from '../client/client'
+import { getSettings, getPrices } from '../client/client'
 import { appContext } from '../context/appContext'
 const Home = () => {
 	const {setPrices} = useContext(appContext)
 
 	useEffect(() => {
-		fetchSettings()
+		fetchPrices();
 	}, [])
 
-	const fetchSettings = async () => {
-		const res = await getSettings()
+	const fetchPrices = async () => {
+		const res = await getPrices()
 		if (res?.data) {
 			const pricesObj = Object.fromEntries(res.data.map(({ label, value }) => [label, value]));
 			setPrices(pricesObj)
+			console.log(pricesObj)
 		}
 	}
 

@@ -7,7 +7,7 @@ const ContextProvider = ({children}) => {
 
 	const [userData, setUserData] = useState('')
 	const [logged, setLogged] = useState(false)
-	const [prices, setPrices] = useState('')
+	const [prices, setPrices] = useState({})
 	const [messageApi, contextHolder] = message.useMessage()
 
 	return(

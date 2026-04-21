@@ -5,19 +5,19 @@ import { getSettings} from "../client/client";
 
 const Configuracion = () => {
     const {messageApi,contextHolder, prices,setPrices} = useContext(appContext);
-    const [ciaConsulta, setCiaConsulta] = useState(prices.CIAConsulta);
-    const [ciaHistoria, setCiaHistoria] = useState(prices.CIAHistoria);
-    const [cianConsulta, setCianConsulta] = useState(prices.CIANConsulta);
-    const [cianHistoria, setCianHistoria] = useState(prices.CIANHistoria);
-    const [cirugia, setCirugia] = useState(prices.Cirugia);
-    const [endodoncia, setEndodoncia] = useState(prices.Endodoncia);
-    const [ortodoncia, setOrtodoncia] = useState(prices.Ortodoncia);
-    const [peridoncia, setPeridoncia] = useState(prices.Peridoncia);
-    const [protesisTotal, setProtesisTotal] = useState(prices.ProtesisTotal);
-    const [protesisParcialRemovible, setProtesisParcialRemovible] = useState(prices.ProtesisParcialRemovible);
-    const [protesisParcialFija, setProtesisParcialFija] = useState(prices.ProtesisParcialFija);
-    const [emergenciaCIA, setEmergenciaCIA] = useState(prices.EmergenciaCIA);
-    const [emergenciaCIAN, setEmergenciaCIAN] = useState(prices.EmergenciaCIAN);
+    const [ciaConsulta, setCiaConsulta] = useState(prices.ciaConsulta);
+    const [ciaHistoria, setCiaHistoria] = useState(prices.ciaHistoria);
+    const [cianConsulta, setCianConsulta] = useState(prices.cianConsulta);
+    const [cianHistoria, setCianHistoria] = useState(prices.cianHistoria);
+    const [cirugia, setCirugia] = useState(prices.cirugia);
+    const [endodoncia, setEndodoncia] = useState(prices.endodoncia);
+    const [ortodoncia, setOrtodoncia] = useState(prices.ortodoncia);
+    const [peridoncia, setPeridoncia] = useState(prices.peridoncia);
+    const [protesisTotal, setProtesisTotal] = useState(prices.protesisTotal);
+    const [protesisParcialRemovible, setProtesisParcialRemovible] = useState(prices.protesisParcialRemovible);
+    const [protesisParcialFija, setProtesisParcialFija] = useState(prices.protesisParcialFija);
+    const [emergenciaCIA, setEmergenciaCIA] = useState(prices.emergenciaCia);
+    const [emergenciaCIAN, setEmergenciaCIAN] = useState(prices.emergenciaCian);
 
 // Validación: no vacío y sólo números (acepta enteros y decimales)
     const isNumeric = (v) => {
@@ -72,7 +72,7 @@ const Configuracion = () => {
             return;
         }
 
-        const settings = {
+        const newPrices = {
             CIAConsulta: ciaConsulta,
             CIAHistoria: ciaHistoria,
             CIANConsulta: cianConsulta,
@@ -89,10 +89,10 @@ const Configuracion = () => {
         };
 
         try {
-            await setSettings(settings);
+            await setPrices(newPrices);
             messageApi.open({
                 type: 'success',
-                content: 'Configuración guardada con exito'
+                content: 'Precios cambiados con exito'
             });
         } catch (error) {
             messageApi.open({

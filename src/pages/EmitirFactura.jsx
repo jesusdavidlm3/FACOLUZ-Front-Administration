@@ -26,7 +26,6 @@ const EmitirFactura = () => {
 
 	async function getDolar(){
 		const dolar = await getDolarPrice()
-		console.log(dolar)
 		setDolarPrice(dolar)
 	}
 
