@@ -62,10 +62,7 @@ export async function savePriceChanges(newPrices){
 // export async function getSearchedUsers(text, page){
 // 	return await http.get(`api/getSearchedUsers/${text}/${page}`, token, null)
 // }
-	
-export async function getAllUsers(page) {
-	return await http.get(`api/getAllUsers/${page}`, token, null)
-}
+
 export async function getSearchedSDeactivatedUsers(text, page){
 	return await http.get(`api/getSearchedSDeactivatedUsers/${text}/${page}`, token, null)
 }
@@ -76,10 +73,6 @@ export async function getDeactivatedUsers(page) {
 
 export async function getIdUsers(id) {
 	return await http.get('api/getIdUsers', token, id)
-}
-
-export async function createUser(data) {
-	return await http.post('api/createUser', token, data)
 }
 
 export async function deleteUser(id){
@@ -100,4 +93,16 @@ export async function changeUserType(data) {
 
 export async function getAllChangeLogs(page) {
 	return await http.get(`api/getAllChangeLogs/${page}`, token, null)
+}
+
+export async function getAllUsers(){
+	return await http.get(`api/user`, token, null)
+}
+
+export async function createUser(user){
+	return await http.post(`api/user`, token, user)
+}
+
+export async function updateUser(user){
+	return await http.patch(`api/user`, token, user)
 }

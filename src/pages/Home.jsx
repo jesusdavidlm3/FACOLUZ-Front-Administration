@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react'
-import { getSettings, getPrices } from '../client/client'
+import { getPrices } from '../client/client'
 import { appContext } from '../context/appContext'
 const Home = () => {
 	const {setPrices} = useContext(appContext)
