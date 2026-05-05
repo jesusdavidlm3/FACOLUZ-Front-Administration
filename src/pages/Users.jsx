@@ -16,7 +16,7 @@ const Users = () => {
 
 	//Control de modals
 	const [addNewUserModal, setNewUserModal] = useState(false)
-	// const [deleteUserModal, setDeleteUserModal] = useState(false)
+	const [deleteUserModal, setDeleteUserModal] = useState(false)
 	// const [changePasswordModal, setChangePasswordModal] = useState(false)
 	// const [changeTypeModal, setChangeTypeModal] = useState(false)
 
@@ -53,7 +53,15 @@ const Users = () => {
 							<div className='buttons'>
 								{/* <Tooltip onClick={() => {setSelectedItem(item); setChangePasswordModal(true)}} title='Cambiar contraseña'><Button shape='circle' variant='solid' color='primary' size='large' icon={<UnlockOutlined />} /></Tooltip> */}
 								{/* <Tooltip onClick={() => {setSelectedItem(item); setChangeTypeModal(true)}} title='Cambiar tipo'><Button shape='circle' variant='solid' color='primary' size='large' icon={<EditOutlined />} /></Tooltip> */}
-								{/* <Tooltip onClick={() => {setSelectedItem(item); setDeleteUserModal(true)}} title='Eliminar'><Button shape='circle' variant='solid' color='danger' size='large' icon={<DeleteOutlined />} /></Tooltip> */}
+								<Tooltip title='Eliminar'>
+									<Button
+										shape='circle'
+										variant='solid'
+										color='danger'
+										size='large'
+										icon={<DeleteOutlined/>}
+										onClick={() => {setSelectedItem(item); setDeleteUserModal(true)}}/>
+								</Tooltip>
 							</div>
 						</List.Item>
 					)) }
@@ -70,20 +78,20 @@ const Users = () => {
 				updateList={() => getContent()}
 			/>
 
-			{/* <DeleteUser
+			<DeleteUser
 				open={deleteUserModal}
 				onCancel={() => setDeleteUserModal(false)}
 				updateList={() => getContent()}
-				id={selectedItem.id}
+				user={selectedItem}
 			/>
 
-			<ChangePassword 
+			{/* <ChangePassword 
 				open={changePasswordModal}
 				onCancel={() => setChangePasswordModal(false)}
 				info={selectedItem}
-			/>
+			/> */}
 
-			<ChangeUserType
+			{/* <ChangeUserType
 				open={changeTypeModal}
 				onCancel={() => setChangeTypeModal(false)}
 				info={selectedItem}

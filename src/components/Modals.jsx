@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react'
 import { appContext } from '../context/appContext'
 import * as lists from '../context/lists'
 import { encrypt } from '../functions/hash'
-import { verifyInvoice, deleteUser, createUser, changePassword, changeUserType ,getIdUsers} from '../client/client'
+import { verifyInvoice, deleteUser, createUser, changePassword, changeUserType ,getIdUsers, updateUser} from '../client/client'
 import React from 'react'
 import { routerContext } from '../context/routerContext'
 import { getDate, getTime } from '../functions/formatDateTime'
@@ -212,18 +212,20 @@ export const AddNewUserModal = ({open, onCancel, updateList}) => {
 	)
 }
 
-export const DeleteUserModal = ({open, onCancel, id, updateList}) => {
+export const DeleteUserModal = ({open, onCancel, user, updateList}) => {
 
 	const {messageApi} = useContext(appContext)
 	const [loading, setLoading] = useState(false)
 
 	const handleDelete = async () => {
 		setLoading(true)
-		let res = await deleteUser(id)
-		if(res.status == 200){
+		const newData = user;
+		newData.active = false;
+		let res = await updateUser(newData)
+		if(res.status == 201){
 			messageApi.open({
 				type: 'success',
-				content: 'Eliminado con exito'
+				content: 'Acceso eliminado con exito'
 			})
 			setLoading(false)
 			updateList()
