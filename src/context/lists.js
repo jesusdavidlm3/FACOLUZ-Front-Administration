@@ -86,6 +86,7 @@ export const userTypeList = [
     {label: 'Administrador de sistemas', value: 0},
     {label: 'Administrador general', value: 1},
     {label: 'Personal de admnistracion', value: 2},
+    {label: 'Autoridades', value: 100},
 ]
 
 export const changeLogsActionType = [

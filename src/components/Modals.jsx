@@ -137,7 +137,6 @@ export const AddNewUserModal = ({open, onCancel, updateList}) => {
 		}
 	}
 	const cleanForm = () => {
-		setIdType('')
 		setIdNumber('')
 		setName('')
 		setLastname('')
@@ -148,7 +147,7 @@ export const AddNewUserModal = ({open, onCancel, updateList}) => {
 	}
 
 	const submitNewUser = async () => {
-		if(idType=='' || idNumber=='' || name=='' || lastname=='' || password == '' || confirmPassword==''){
+		if(idNumber=='' || name=='' || lastname=='' || password == '' || confirmPassword==''){
 			messageApi.open({
 				type: 'error',
 				content: 'Debe ingresar todos los datos'
@@ -161,16 +160,15 @@ export const AddNewUserModal = ({open, onCancel, updateList}) => {
 		}else{
 			setLoading(true)
 			const data = {
-				idType: idType,
 				id: idNumber,
 				name: name,
 				lastname: lastname,
-				password: await encrypt(password),
-				userType: userType
+				passwordSHA256: await encrypt(password),
+				type: userType,
 			}
 
 			const res = await createUser(data)
-			if(res.status == 200){
+			if(res.status == 201){
 				setLoading(false)
 				messageApi.open({
 					type: 'success',
@@ -208,7 +206,7 @@ export const AddNewUserModal = ({open, onCancel, updateList}) => {
 				
 				<Input.Password disabled={loading} placeholder='Contraseña' onChange={(e) => setPassword(e.target.value)}/>
 				<Input.Password disabled={loading} placeholder='Confirmar contraseña' onChange={(e) => setConfirmPassword(e.target.value)}/>
-				<Select disabled={loading} onChange={(e) => setUserType(e)} placeholder='Tipo de Usuario' options={lists.userTypeList.slice(1, 2)}/>
+				<Select disabled={loading} onChange={(e) => setUserType(e)} placeholder='Tipo de Usuario' options={lists.userTypeList.slice(1, 3)}/>
 			</div>
 		</Modal>
 	)
