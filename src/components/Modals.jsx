@@ -111,31 +111,31 @@ export const AddNewUserModal = ({open, onCancel, updateList}) => {
 	const [userType, setUserType] = useState('')
 
 
-	async function findUser(id){
-		let res = await getIdUsers(id)
+	// async function findUser(id){
+	// 	let res = await getIdUsers(id)
 
-		console.log(res)
+	// 	console.log(res)
 		
-		switch (res.data[0].active) {
-			case 0:
-				messageApi.open({
-					type: 'error',
-					content: 'El usuario con esa cedula existe pero esta inactivo'
-				})
-				setLoading(true)
-				break;
-			case 1:
-				messageApi.open({
-					type: 'error',
-					content: 'El usuario con esa cedula existe.'
-				})
-				setLoading(true)
-				break;
-			case undefined:
-				setLoading(false)
-				break;
-		}
-	}
+	// 	switch (res.data[0].active) {
+	// 		case 0:
+	// 			messageApi.open({
+	// 				type: 'error',
+	// 				content: 'El usuario con esa cedula existe pero esta inactivo'
+	// 			})
+	// 			setLoading(true)
+	// 			break;
+	// 		case 1:
+	// 			messageApi.open({
+	// 				type: 'error',
+	// 				content: 'El usuario con esa cedula existe.'
+	// 			})
+	// 			setLoading(true)
+	// 			break;
+	// 		case undefined:
+	// 			setLoading(false)
+	// 			break;
+	// 	}
+	// }
 	const cleanForm = () => {
 		setIdNumber('')
 		setName('')
@@ -198,7 +198,7 @@ export const AddNewUserModal = ({open, onCancel, updateList}) => {
 			]}
 		>
 			<div style={{display: 'flex', flexDirection: 'column', gap: '10px'}}>
-					<InputNumber onBlur={(e) => {findUser(Number(e.target.value))}} onChange={(e) => setIdNumber(e)} placeholder='Numero de cedula' style={{width: '100%'}}/>
+					<InputNumber onChange={(e) => setIdNumber(e)} placeholder='Numero de cedula' style={{width: '100%'}}/>
 				<Space.Compact style={{width: '100%'}}>
 					<Input disabled={loading} onChange={(e) => setName(e.target.value)} placeholder='Nombre' style={{width: '50%'}}/>
 					<Input disabled={loading} onChange={(e) => setLastname(e.target.value)} placeholder='Apellido' style={{width: '50%'}}/>
@@ -206,7 +206,7 @@ export const AddNewUserModal = ({open, onCancel, updateList}) => {
 				
 				<Input.Password disabled={loading} placeholder='Contraseña' onChange={(e) => setPassword(e.target.value)}/>
 				<Input.Password disabled={loading} placeholder='Confirmar contraseña' onChange={(e) => setConfirmPassword(e.target.value)}/>
-				<Select disabled={loading} onChange={(e) => setUserType(e)} placeholder='Tipo de Usuario' options={lists.userTypeList.slice(1, 3)}/>
+				<Select disabled={loading} onChange={(e) => setUserType(e)} placeholder='Tipo de Usuario' options={lists.userTypeList.slice(1, 4)}/>
 			</div>
 		</Modal>
 	)

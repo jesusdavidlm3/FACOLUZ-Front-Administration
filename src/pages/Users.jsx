@@ -53,15 +53,28 @@ const Users = () => {
 							<div className='buttons'>
 								{/* <Tooltip onClick={() => {setSelectedItem(item); setChangePasswordModal(true)}} title='Cambiar contraseña'><Button shape='circle' variant='solid' color='primary' size='large' icon={<UnlockOutlined />} /></Tooltip> */}
 								{/* <Tooltip onClick={() => {setSelectedItem(item); setChangeTypeModal(true)}} title='Cambiar tipo'><Button shape='circle' variant='solid' color='primary' size='large' icon={<EditOutlined />} /></Tooltip> */}
-								<Tooltip title='Eliminar'>
-									<Button
-										shape='circle'
-										variant='solid'
-										color='danger'
-										size='large'
-										icon={<DeleteOutlined/>}
-										onClick={() => {setSelectedItem(item); setDeleteUserModal(true)}}/>
-								</Tooltip>
+								{item.active == true ? (  
+									<Tooltip title='Desactivar'>
+										<Button
+											shape='circle'
+											variant='solid'
+											color='danger'
+											size='large'
+											icon={<DeleteOutlined/>}
+											onClick={() => {setSelectedItem(item); setDeleteUserModal(true)}}/>
+									</Tooltip>
+									):(
+										<Tooltip title='Desactivado'>
+											<Button
+												disabled
+												shape='circle'
+												variant='solid'
+												color='danger'
+												size='large'
+												icon={<DeleteOutlined/>}/>
+										</Tooltip>
+									)
+								}
 							</div>
 						</List.Item>
 					)) }
