@@ -8,7 +8,7 @@ import {CheckCircleOutlined } from '@ant-design/icons'
 import { getTime, getDate } from '../functions/formatDates'
 import { appContext } from '../context/appContext'
 import Pagination from "../components/Pagination"
-import { VerifyInvoiceModal } from '../components/Modals'
+import { VerifyInvoiceModal, CancelInvoiceModal } from '../components/Modals'
 
 const ConsultarRegistros = () => {
     const {contextHolder, messageApi} = useContext(appContext)
@@ -17,7 +17,8 @@ const ConsultarRegistros = () => {
 	const [selectedItem, setSelectedItem] = useState('')
 	const [page, setPage] = useState(1)
 	//Control de modal
-	const [invoiceModal, setInvoiceModal] = useState(false)
+	const [verifyInvoiceControl, setVerifyInvoiceControl] = useState(false)
+	const [cancelInvoiceControl, setCancelInvoiceControl] = useState(false)
 
     useEffect(() => {
         getContent()
@@ -99,7 +100,7 @@ const ConsultarRegistros = () => {
 											size='large'
 											icon ={<CheckCircleOutlined />}
 											title='Verificar'
-											onClick={() => {setSelectedItem(item); setInvoiceModal(true)}}
+											onClick={() => {setSelectedItem(item); setVerifyInvoiceControl(true)}}
 										/>
 								</Tooltip>}
 
@@ -115,7 +116,7 @@ const ConsultarRegistros = () => {
 											size='large'
 											icon ={<CheckCircleOutlined />}
 											title='Anular Factura'
-											// onClick={() => {setSelectedItem(item); setInvoiceModal(true)}}
+											onClick={() => {setSelectedItem(item); setCancelInvoiceControl(true)}}
 										/>
 								</Tooltip>
 								</div>}
@@ -131,10 +132,17 @@ const ConsultarRegistros = () => {
 			</div>
 
 			<div className='EmptyFooter'/>
+
 			<VerifyInvoiceModal 
 				invoice={selectedItem}
-				open={invoiceModal}
-				onCancel={() => setInvoiceModal(false)}
+				open={verifyInvoiceControl}
+				onCancel={() => setVerifyInvoiceControl(false)}
+				updateList={updateList}
+			/>
+			<CancelInvoiceModal
+				invoiceId={selectedItem.id}
+				open={cancelInvoiceControl}
+				onCancel={() => setCancelInvoiceControl(false)}
 				updateList={updateList}
 			/>
         </div>

@@ -106,3 +106,7 @@ export async function createUser(user){
 export async function updateUser(user){
 	return await http.patch(`api/user`, token, user)
 }
+
+export async function cancelInvoice(invoiceId){
+	return await http.delete(`api/invoice`, token, value)
+}

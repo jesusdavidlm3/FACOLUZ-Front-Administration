@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from 'react'
 import { appContext } from '../context/appContext'
 import * as lists from '../context/lists'
 import { encrypt } from '../functions/hash'
-import { verifyInvoice, deleteUser, createUser, changePassword, changeUserType ,getIdUsers, updateUser} from '../client/client'
+import { verifyInvoice, deleteUser, createUser, changePassword, changeUserType ,getIdUsers, updateUser, cancelInvoice} from '../client/client'
 import React from 'react'
 import { routerContext } from '../context/routerContext'
 import { getDate, getTime } from '../functions/formatDateTime'
@@ -432,6 +432,39 @@ export const ChangeUserTypeModal = ({open, onCancel, info}) => {
 				onChange={(e) => setSelectedType(e)}
 				defaultValue={info.type}
 			/>
+		</Modal>
+	)
+}
+
+export const CancelInvoiceModal = ({open, OnCancel, invoiceId, updateList}) => {
+
+	async function submit(){
+		const res = await cancelInvoice(invoiceId)
+		if(res.status == 204){
+			messageApi.open({
+				type: 'success',
+				content: 'Factura anulada'
+			})
+			updateList();
+			OnCancel();
+		}else{
+			messageApi.open({
+				type: 'error',
+				content: "ha ocurrido un error"
+			})
+		}
+	}
+
+	return (
+		<Modal
+			open={open}
+			onCancel={onCancel}
+			title="Desea anular esta factura?"
+			footer={[
+				<Button variant='solid' color='danger' content='Anular Factura' onClick={() => submit()}/>,
+				<Button variant="solid" color='blue' content='Atras' onClick={() => OnCancel()}/>
+			]}
+		>
 		</Modal>
 	)
 }
