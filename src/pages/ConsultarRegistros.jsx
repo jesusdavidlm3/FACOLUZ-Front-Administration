@@ -60,10 +60,8 @@ const ConsultarRegistros = () => {
 	}
 
 	const updateList = (newStatus) => {
-		console.log("ejecuta")
 		const list = showList
 		const i = showList.findIndex((i) => i.id == selectedItem.id)
-		// console.log({Position: i, item: list[i], id: selectedItem.id})
 		list[i].status = newStatus
 		setShowList(list)
 	}
@@ -86,7 +84,7 @@ const ConsultarRegistros = () => {
 					{ showList && showList.map(item => (
 						<List.Item className='listItem'>
 							<div className='info'>
-								<h4>{getDate(item.date)} - {getTime(item.date)} -- {item.patientId} - {item.patientName} -- {item.billableitem}  </h4>
+								<h4>{getDate(item.date)} - {getTime(item.date)} -- {item.amount} -- {item.patientId} - {item.patientName} -- {item.billableitem}  </h4>
 							</div>
 							<div className='buttons'>
 								{item.status === "Pendiente" && 
@@ -118,7 +116,17 @@ const ConsultarRegistros = () => {
 											title='Anular Factura'
 											onClick={() => {setSelectedItem(item); setCancelInvoiceControl(true)}}
 										/>
-								</Tooltip>
+									</Tooltip>
+								</div>}
+
+								{item.status === "Anulacion" && <div style={{display: 'flex', alignItems: 'center', gap: "5px"}}>
+									<h3 style={{color: "red"}}>Anulacion</h3>
+									
+								</div>}
+
+								{item.status === "Anulada" && <div style={{display: 'flex', alignItems: 'center', gap: "5px"}}>
+									<h3 style={{color: "red"}}>Factura anulada</h3>
+									
 								</div>}
 
 								{item.status === "Rechazada" && 

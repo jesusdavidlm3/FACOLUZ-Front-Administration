@@ -436,17 +436,19 @@ export const ChangeUserTypeModal = ({open, onCancel, info}) => {
 	)
 }
 
-export const CancelInvoiceModal = ({open, OnCancel, invoiceId, updateList}) => {
+export const CancelInvoiceModal = ({open, onCancel, invoiceId, updateList}) => {
+
+	const { messageApi } = useContext(appContext)
 
 	async function submit(){
 		const res = await cancelInvoice(invoiceId)
-		if(res.status == 204){
+		if(res.status === 204){
 			messageApi.open({
 				type: 'success',
 				content: 'Factura anulada'
 			})
 			updateList();
-			OnCancel();
+			onCancel();
 		}else{
 			messageApi.open({
 				type: 'error',
@@ -461,8 +463,8 @@ export const CancelInvoiceModal = ({open, OnCancel, invoiceId, updateList}) => {
 			onCancel={onCancel}
 			title="Desea anular esta factura?"
 			footer={[
-				<Button variant='solid' color='danger' content='Anular Factura' onClick={() => submit()}/>,
-				<Button variant="solid" color='blue' content='Atras' onClick={() => OnCancel()}/>
+				<Button variant='solid' color='danger' onClick={() => submit()}>Anular factura</Button>,
+				<Button variant="solid" color='blue' onClick={onCancel}>Atras</Button>
 			]}
 		>
 		</Modal>

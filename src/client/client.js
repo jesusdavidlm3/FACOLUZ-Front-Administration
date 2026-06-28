@@ -108,5 +108,5 @@ export async function updateUser(user){
 }
 
 export async function cancelInvoice(invoiceId){
-	return await http.delete(`api/invoice`, token, value)
+	return await http.delete(`api/invoice`, token, invoiceId)
 }
